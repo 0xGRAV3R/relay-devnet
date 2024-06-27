@@ -160,7 +160,8 @@ export function AppHero({
             title
           )}
           {typeof subtitle === 'string' ? (
-            <p className="py-6">{subtitle}</p>
+            /*<p className="py-6">{subtitle}</p>*/
+            <p>{subtitle}</p>
           ) : (
             subtitle
           )}
