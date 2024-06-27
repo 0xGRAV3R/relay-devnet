@@ -47,10 +47,13 @@ export function UiLayout({
               </li>
             ))}
           </ul>
-        </div>
-        <div className="flex-none space-x-2">
           <WalletButton />
-          <ClusterUiSelect />
+          &nbsp;
+          <ClusterUiSelect />    
+        </div>
+        <div className="flex-1">
+          
+
         </div>
       </div>
       <ClusterChecker>
