@@ -1,0 +1,195 @@
+{
+  "address": "Ef6v5Rsj6Yx51gjvwNhuvynxeuiVE31taQcm2WiyccjY",
+  "metadata": {
+    "name": "relay",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor",
+    "address": "Ef6v5Rsj6Yx51gjvwNhuvynxeuiVE31taQcm2WiyccjY"
+  },
+  "instructions": [
+    {
+      "name": "create_relay_entry",
+      "discriminator": [
+        162,
+        113,
+        73,
+        252,
+        153,
+        1,
+        198,
+        12
+      ],
+      "accounts": [
+        {
+          "name": "relay_entry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "delete_relay_entry",
+      "discriminator": [
+        223,
+        89,
+        195,
+        207,
+        239,
+        176,
+        54,
+        73
+      ],
+      "accounts": [
+        {
+          "name": "relay_entry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "update_relay_entry",
+      "discriminator": [
+        164,
+        101,
+        25,
+        229,
+        164,
+        157,
+        204,
+        170
+      ],
+      "accounts": [
+        {
+          "name": "relay_entry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "RelayEntryState",
+      "discriminator": [
+        81,
+        155,
+        164,
+        13,
+        203,
+        229,
+        37,
+        128
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "RelayEntryState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ]
+}
