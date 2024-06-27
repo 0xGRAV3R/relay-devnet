@@ -26,8 +26,8 @@ export function UiLayout({
 
   return (
     <div className="h-full flex flex-col">
-      <div className="navbar bg-base-300 text-neutral-content flex-col md:flex-row space-y-2 md:space-y-0">
-        <div className="flex-1">
+      <div className="navbar bg-base-300 text-neutral-content flex-col md:flex-row space-y-2 md:space-y-0" >
+        <div className="flex-1" style={{minHeight: "23px"}}>
           <Link className="btn btn-ghost normal-case text-xl" href="/">
             <img
               className="h-4 md:h-6"
@@ -48,7 +48,7 @@ export function UiLayout({
             ))}
           </ul>
         </div>
-        <div className="flex-none space-x-2">
+        <div className="flex-2 space-x-2"  >
           <WalletButton />
           <ClusterUiSelect />
         </div>
