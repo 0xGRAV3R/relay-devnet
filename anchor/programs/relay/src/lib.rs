@@ -2,7 +2,7 @@ use anchor_lang::prelude::*;
 
 // This is your program's public key and it will update
 // automatically when you build the project.
-declare_id!("Ef6v5Rsj6Yx51gjvwNhuvynxeuiVE31taQcm2WiyccjY");
+declare_id!("DBPA83yqVRDspVi2sXGWPQbFR4AwuBpFZY79GyKHb53N");
 
 #[program]
 mod relay {

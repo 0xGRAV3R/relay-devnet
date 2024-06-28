@@ -21,7 +21,7 @@ export function useRelayProgram() {
   const { cluster } = useCluster();
   const transactionToast = useTransactionToast();
   const provider = useAnchorProvider();
-  const programId = new PublicKey("Ef6v5Rsj6Yx51gjvwNhuvynxeuiVE31taQcm2WiyccjY");
+  const programId = new PublicKey("DBPA83yqVRDspVi2sXGWPQbFR4AwuBpFZY79GyKHb53N");
   const program = new Program(RelayIDL, programId, provider);
 
   const accounts = useQuery({

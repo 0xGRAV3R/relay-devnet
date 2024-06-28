@@ -33,7 +33,7 @@ export function RelayCreate() {
     <div>
       <input
         type="text"
-        placeholder="Title"
+        placeholder="Address"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         className="input input-bordered w-full max-w-xs"
@@ -125,7 +125,8 @@ function RelayCard({ account }: { account: PublicKey }) {
       <div className="card-body ">
         <div className="space-y-2">
           <h2
-            className="card-title text-2xl cursor-pointer"
+            /*className="card-title text-2xl cursor-pointer"*/
+            className="link"
             onClick={() => accountQuery.refetch()}
           >
             {accountQuery.data?.title}

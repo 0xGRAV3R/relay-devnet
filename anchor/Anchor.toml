@@ -1,18 +1,18 @@
 [toolchain]
 
 [features]
-resolution = true
+seeds = false
 skip-lint = false
 
 [programs.localnet]
-relay = "Ef6v5Rsj6Yx51gjvwNhuvynxeuiVE31taQcm2WiyccjY"
+relay = "DBPA83yqVRDspVi2sXGWPQbFR4AwuBpFZY79GyKHb53N"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
 cluster = "Localnet"
-wallet = "~/.config/solana/id.json"
+wallet = "/Users/decaff/.config/solana/id.json"
 
 [scripts]
 test = "../node_modules/.bin/nx run anchor:jest"
