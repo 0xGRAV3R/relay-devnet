@@ -76,7 +76,7 @@ export function UiLayout({
           (ɔ) Degentralised Messaging dApp using {' '}
             <a
               className="link hover:text-white"
-              href="https://solana.com/"
+              href="https://github.com/0xGRAV3R/relay-devnet"
               target="_blank"
               rel="noopener noreferrer"
             >
