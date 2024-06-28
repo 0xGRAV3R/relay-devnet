@@ -126,7 +126,7 @@ function RelayCard({ account }: { account: PublicKey }) {
         <div className="space-y-2">
           <h2
             /*className="card-title text-2xl cursor-pointer"*/
-            className="link"
+            className="link text-xs"
             onClick={() => accountQuery.refetch()}
           >
             {accountQuery.data?.title}
