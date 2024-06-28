@@ -49,15 +49,17 @@ You can use any normal anchor commands. Either move to the `anchor` directory an
 
 Running this command will create a new keypair in the `anchor/target/deploy` directory and save the address to the Anchor config file and update the `declare_id!` macro in the `./src/lib.rs` file of the program.
 
-You will manually need to update the constant in `anchor/lib/counter-exports.ts` to match the new program id.
+You will manually need to update the constant in `anchor/lib/counter-exports.ts` to match the new program id. For this version, you can cd anchor first to get to anchor directory.
 
 ```shell
+anchor keys sync 
 npm run anchor keys sync
 ```
 
 #### Build the program:
 
 ```shell
+anchor build
 npm run anchor-build
 ```
 
@@ -76,12 +78,15 @@ npm run anchor-test
 #### Deploy to Devnet
 
 ```shell
+anchor deploy --provider.cluster testnet
+(or)
+anchor deploy --provider.cluster devnet
 npm run anchor deploy --provider.cluster devnet
 ```
 
 ### Web
 
-This is a React app that uses the Anchor generated client to interact with the Solana program.
+This is a React app that uses the Anchor generated client to interact with the Solana program. You can cd to root or cd ..
 
 #### Commands
 

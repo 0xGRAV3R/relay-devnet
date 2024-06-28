@@ -49,7 +49,9 @@ export function UiLayout({
           </ul>
         </div>
         <div className="flex-2 space-x-2"  >
-          <WalletButton />
+          <WalletButton 
+          
+          />
           <ClusterUiSelect />
         </div>
       </div>
@@ -66,7 +68,7 @@ export function UiLayout({
         >
           {children}
         </Suspense>
-        <Toaster position="bottom-right" />
+        <Toaster  />
       </div>
       <footer className="footer footer-center p-4 bg-base-300 text-base-content">
         <aside>
@@ -82,6 +84,7 @@ export function UiLayout({
             </a>
           </p>
         </aside>
+        
       </footer>
     </div>
   );
