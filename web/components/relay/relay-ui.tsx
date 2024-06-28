@@ -36,8 +36,9 @@ export function RelayCreate() {
         placeholder="Address"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="input input-bordered w-full max-w-xs"
+        className="input input-bordered w-full max-w-xs mb-1"
       />
+      
       <textarea
         placeholder="Message"
         value={message}
