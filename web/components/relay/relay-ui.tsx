@@ -135,7 +135,7 @@ function RelayCard({ account }: { account: PublicKey }) {
           <p> 
           {accountQuery.data?.message}
           </p>
-          <div className="card-actions justify-around">
+          {/*<div className="card-actions justify-around">
             <textarea
               placeholder="Update message here"
               value={message}
@@ -149,10 +149,11 @@ function RelayCard({ account }: { account: PublicKey }) {
             >
               Update Message Entry {updateEntry.isPending && '...'}
             </button>
-          </div>
+          </div>*/}
           <div className="text-center space-y-4">
             <p>
               <ExplorerLink
+                className='text-xs link'
                 path={`account/${account}`}
                 label={ellipsify(account.toString())}
               />
