@@ -122,8 +122,9 @@ function RelayCard({ account }: { account: PublicKey }) {
   return accountQuery.isLoading ? (
     <span className="loading loading-spinner loading-lg"></span>
   ) : (
-    <div className="card card-bordered border-base-300 border-4 text-neutral-content">
-      <div className="card-body ">
+    <div className="card card-bordered border-base-300 border-2 text-neutral-content">
+      {/*<div className="card-body p-8">*/}
+      <div className="p-2">
         <div className="space-y-2">
           <h2
             /*className="card-title text-2xl cursor-pointer"*/
