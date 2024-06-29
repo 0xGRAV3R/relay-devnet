@@ -18,7 +18,9 @@ Test it out here: [https://relay-devnet.vercel.app](https://relay-devnet.vercel.
 
 ```shell
 git clone <repo-url>
+git clone https://github.com/0xGRAV3R/relay-devnet
 cd <repo-name>
+cd relay-devnet
 ```
 
 #### Install dependencies
