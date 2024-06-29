@@ -10,7 +10,7 @@ Test it out here: [https://relay-devnet.vercel.app](https://relay-devnet.vercel.
 - Node v18.18.0 or higher
 - Rust v1.70.0 or higher
 - **Anchor CLI 0.29.0 only for now** 
-- Solana CLI 1.17.0 or higher
+- Solana CLI 1.18.6 or higher
 
 ### Installation
 
