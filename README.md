@@ -18,6 +18,7 @@ Test it out here: [https://relay-devnet.vercel.app](https://relay-devnet.vercel.
 
 ```shell
 git clone <repo-url>
+git clone relay-devnet
 cd <repo-name>
 cd relay-devnet
 ```
