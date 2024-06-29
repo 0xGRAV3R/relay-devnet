@@ -5,8 +5,8 @@ import { SolanaProvider } from '@/components/solana/solana-provider';
 import { ReactQueryProvider } from './react-query-provider';
 
 export const metadata = {
-  title: 'relay',
-  description: 's by create-solana-dapp',
+  title: 'RELAY',
+  description: 'Solana Messenger',
 };
 
 const links: { label: string; path: string }[] = [
