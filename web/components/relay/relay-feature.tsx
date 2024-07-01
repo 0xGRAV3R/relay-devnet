@@ -27,44 +27,23 @@ export default function RelayFeature() {
 
       {/* Added Modal */} 
       {/* The button to open modal */}
-<label htmlFor="my_modal_7" className="btn">open modal</label>
+      <label htmlFor="my_modal_7" className="btn">✍️ Send Message</label>
 
-{/* Put this part before </body> tag */}
-<input type="checkbox" id="my_modal_7" className="modal-toggle" />
-<div className="modal" role="dialog">
-  <div className="modal-box">
-    <h3 className="text-lg font-bold">Hello!</h3>
-    <p className="py-4">This modal works with a hidden checkbox!</p>
-  </div>
-  <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
-</div>
-
-
-
-
-
-
-      <div className="drawer">
-        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content">
-          {/* Page content here */}
-          <label htmlFor="my-drawer" className="btn btn-primary drawer-button">✍️ Send Message</label>
+      {/* Put this part before </body> tag */}
+      <input type="checkbox" id="my_modal_7" className="modal-toggle" />
+      <div className="modal" role="dialog">
+        <div className="modal-box">
+        <h3 className="text-lg font-bold">Relay - Sol Messenger</h3>
+                      <p className="py-4">Send your message here! <br />
+                  <ExplorerLink
+                        path={`account/${programId}`}
+                        label={ellipsify(programId.toString())}
+                      />
+                      </p>
+                  <RelayCreate />
         </div>
-        <div className="drawer-side">
-          <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-          <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-            {/* Sidebar content here */}
-            <h3 className="text-lg font-bold">Relay - Sol Messenger</h3>
-                <p className="py-4">Send your message here! <br />
-            <ExplorerLink
-                  path={`account/${programId}`}
-                  label={ellipsify(programId.toString())}
-                />
-                </p>
-            <RelayCreate />
-          </ul>
-        </div>
-      </div>    
+        <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
+      </div>
 
       {/* Added Modal */} 
 

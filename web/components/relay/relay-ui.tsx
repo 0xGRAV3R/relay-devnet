@@ -133,7 +133,7 @@ function RelayCard({ account }: { account: PublicKey }) {
           <div className="chat-header">
           <p
             /*className="card-title text-2xl cursor-pointer"*/
-            className="link text-xs text-blue-700"
+            className="link text-xs text-accent"
             onClick={() => accountQuery.refetch()}
           >
             {accountQuery.data?.title}
