@@ -124,20 +124,27 @@ function RelayCard({ account }: { account: PublicKey }) {
   return accountQuery.isLoading ? (
     <span className="loading loading-spinner loading-lg"></span>
   ) : (
-    <div className="card card-bordered border-base-300 border-2 text-neutral-content">
+    <div className="chat chat-start">
+    {/*<div className="card card-bordered border-base-300 border-2 text-neutral-content">*/}  
       {/*<div className="card-body p-8">*/}
       <div className="p-2">
         <div className="space-y-2">
-          <h2
+          
+          <div className="chat-header">
+          <p
             /*className="card-title text-2xl cursor-pointer"*/
             className="link text-xs"
             onClick={() => accountQuery.refetch()}
           >
             {accountQuery.data?.title}
-          </h2>
+          </p>
+          </div>
+          
+          <div className="chat-bubble">
           <p> 
           {accountQuery.data?.message}
           </p>
+          </div>
           {/*<div className="card-actions justify-around">
             <textarea
               placeholder="Update message here"
@@ -154,6 +161,7 @@ function RelayCard({ account }: { account: PublicKey }) {
             </button>
           </div>*/}
           <div className="text-center space-y-4">
+            <div className="chat-footer opacity-50">
             <p>
               <ExplorerLink
                 className='text-xs link'
@@ -161,6 +169,7 @@ function RelayCard({ account }: { account: PublicKey }) {
                 label={ellipsify(account.toString())}
               />
             </p>
+            </div>
             <button
               className="btn btn-xs btn-secondary btn-outline"
               onClick={() => {
