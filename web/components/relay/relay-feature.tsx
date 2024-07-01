@@ -14,11 +14,15 @@ export default function RelayFeature() {
   return publicKey ? (
     <div>
       <AppHero
-        title="Relay - Sol Messenger"
+        title=""
         subtitle={
-          'Send your message here!'
+          ''
         }
+        
       >
+        <div className="tooltip tooltip-right" data-tip="Send your message here!">
+          <button className="btn">Relay - Sol Messenger</button>
+        </div>
         <p className="mb-6">
           <ExplorerLink
             path={`account/${programId}`}

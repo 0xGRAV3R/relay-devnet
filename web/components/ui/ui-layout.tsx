@@ -26,11 +26,11 @@ export function UiLayout({
 
   return (
     <div className="h-full flex flex-col">
-      <div className="navbar bg-base-300 text-neutral-content flex-col md:flex-row space-y-2 md:space-y-0" >
+      <div className="navbar bg-base-100 text-neutral-content flex-col md:flex-row space-y-2 md:space-y-0" >
         <div className="flex-1" style={{minHeight: "23px"}}>
           <Link className="btn btn-ghost normal-case text-xl" href="/">
             <img
-              className="h-4 md:h-6"
+              className="h-2 md:h-3"
               alt="Solana Logo"
               src="/solana-logo.png"
             />
@@ -48,12 +48,13 @@ export function UiLayout({
             ))}
           </ul>
         </div>
-        <div className="flex-2 space-x-2"  >
-          <WalletButton 
-          
-          />
+
+       
+        <div className="flex-2 space-x-2 "  >
+          <WalletButton  />
           <ClusterUiSelect />
         </div>
+
       </div>
       <ClusterChecker>
         <AccountChecker />
@@ -70,6 +71,9 @@ export function UiLayout({
         </Suspense>
         <Toaster  />
       </div>
+      {/*Added for bottom navigation */}
+      
+      {/*Added for bottom navigation */}
       <footer className="footer footer-center p-4 bg-base-300 text-base-content">
         <aside>
           <p>

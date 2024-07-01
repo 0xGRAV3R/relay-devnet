@@ -38,18 +38,18 @@ export function RelayCreate() {
         placeholder="Address"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="input input-bordered w-full max-w-xs mb-1"
+        className="input input-bordered input-xs w-full max-w-xs mb-1"
       />
       
       <textarea
         placeholder="Message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="textarea textarea-bordered w-full max-w-xs"
+        className="textarea textarea-bordered textarea-xs w-full max-w-xs"
       />
       <br></br>
       <button
-        className="btn btn-xs lg:btn-md btn-primary"
+        className="btn btn-xs lg:btn-md btn-accent"
         onClick={handleSubmit}
         disabled={createEntry.isPending || !isFormValid}
       >
