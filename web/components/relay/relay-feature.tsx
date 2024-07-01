@@ -32,7 +32,7 @@ export default function RelayFeature() {
       <dialog id="send_message_modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Relay - Solana Messenger</h3>
-          <p className="py-4">Send your message here! <br />Press ESC key or click outside to close<br />
+          <p className="p-2 text-xs">Send your message here! <br />Press ESC key to close<br />
           <ExplorerLink
                         path={`account/${programId}`}
                         label={ellipsify(programId.toString())}

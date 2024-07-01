@@ -160,7 +160,8 @@ function RelayCard({ account }: { account: PublicKey }) {
               Update Message Entry {updateEntry.isPending && '...'}
             </button>
           </div>*/}
-          <div className="text-center space-y-4">
+          <div className="text-center">
+          {/* <div className="text-center space-y-4"> */}
             <div className="chat-footer opacity-50">
             <p>
               <ExplorerLink
@@ -171,7 +172,7 @@ function RelayCard({ account }: { account: PublicKey }) {
             </p>
             </div>
             <button
-              className="btn btn-xs btn-secondary btn-outline"
+              className="btn btn-xs btn-error btn-outline"
               onClick={() => {
                 if (
                   !window.confirm(
@@ -187,8 +188,9 @@ function RelayCard({ account }: { account: PublicKey }) {
               }}
               disabled={deleteEntry.isPending}
             >
-              Close
+              🚫
             </button>
+            
           </div>
         </div>
       </div>
