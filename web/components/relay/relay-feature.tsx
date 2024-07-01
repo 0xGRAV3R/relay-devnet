@@ -26,25 +26,26 @@ export default function RelayFeature() {
 
 
       {/* Added Modal */} 
-      {/* The button to open modal */}
-      <label htmlFor="my_modal_7" className="btn">✍️ Send Message</label>
 
-      {/* Put this part before </body> tag */}
-      <input type="checkbox" id="my_modal_7" className="modal-toggle" />
-      <div className="modal" role="dialog">
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <button className="btn" onClick={()=>(document.getElementById('send_message_modal') as HTMLDialogElement).showModal()}>💬 Send Message</button>
+      <dialog id="send_message_modal" className="modal">
         <div className="modal-box">
-        <h3 className="text-lg font-bold">Relay - Sol Messenger</h3>
-                      <p className="py-4">Send your message here! <br />
-                  <ExplorerLink
+          <h3 className="font-bold text-lg">Relay - Solana Messenger</h3>
+          <p className="py-4">Send your message here! <br />Press ESC key or click outside to close<br />
+          <ExplorerLink
                         path={`account/${programId}`}
                         label={ellipsify(programId.toString())}
                       />
-                      </p>
-                  <RelayCreate />
-        </div>
-        <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
-      </div>
+          </p>
 
+          <RelayCreate />
+          
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
       {/* Added Modal */} 
 
       </AppHero>
