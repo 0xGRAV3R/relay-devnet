@@ -51,7 +51,9 @@ export function UiLayout({
 
        
         <div className="flex-2 space-x-2 "  >
-          <WalletButton  />
+          <WalletButton  
+          
+          />
           <ClusterUiSelect />
         </div>
 

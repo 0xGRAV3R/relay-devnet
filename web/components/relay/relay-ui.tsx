@@ -49,7 +49,7 @@ export function RelayCreate() {
       />
       <br></br>
       <button
-        className="btn btn-xs lg:btn-md btn-accent"
+        className="btn btn-xs sm:btn-sm btn-accent"
         onClick={handleSubmit}
         disabled={createEntry.isPending || !isFormValid}
       >
@@ -133,7 +133,7 @@ function RelayCard({ account }: { account: PublicKey }) {
           <div className="chat-header">
           <p
             /*className="card-title text-2xl cursor-pointer"*/
-            className="link text-xs"
+            className="link text-xs text-blue-700"
             onClick={() => accountQuery.refetch()}
           >
             {accountQuery.data?.title}

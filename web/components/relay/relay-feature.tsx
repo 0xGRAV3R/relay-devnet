@@ -13,23 +13,42 @@ export default function RelayFeature() {
 
   return publicKey ? (
     <div>
+      
       <AppHero
-        title=""
+        /*
+        title="Relay - Sol Messenger"
         subtitle={
-          ''
+          'Send your message here!'
         }
-        
+        */
       >
-        <div className="tooltip tooltip-right" data-tip="Send your message here!">
-          <button className="btn">Relay - Sol Messenger</button>
-        </div>
-        <p className="mb-6">
+      
+
+      {/* Added Modal */} 
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}>✍️ Send Message</button>
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Relay - Sol Messenger</h3>
+          <p className="py-4">Send your message here! <br /> Press ESC key or click the button below to close</p>
+          
+          <p className="mb-6">
           <ExplorerLink
             path={`account/${programId}`}
             label={ellipsify(programId.toString())}
           />
-        </p>
-        <RelayCreate />
+          </p>
+          <RelayCreate />
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+      {/* Added Modal */} 
+
       </AppHero>
       <RelayList />
     </div>
