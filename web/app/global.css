@@ -17,3 +17,14 @@ body {
 .wallet-adapter-button {
   font-family: inherit !important;
 }
+
+/* Added new styles 134D93F */
+.chat-bubble {
+  max-width: 100%;
+}
+
+.wallet-adapter-button {
+  font-size: 13px;
+  height: 36px;
+}
+
