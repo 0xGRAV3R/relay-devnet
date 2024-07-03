@@ -160,7 +160,7 @@ function RelayCard({ account }: { account: PublicKey }) {
               Update Message Entry {updateEntry.isPending && '...'}
             </button>
           </div>*/}
-          <div className="text-center">
+          <div className="text-left">
           {/* <div className="text-center space-y-4"> */}
             <div className="chat-footer opacity-50">
             <p>
@@ -169,10 +169,10 @@ function RelayCard({ account }: { account: PublicKey }) {
                 path={`account/${account}`}
                 label={ellipsify(account.toString())}
               />
-            </p>
-            </div>
+
             <button
-              className="btn btn-xs btn-error btn-outline"
+              /*className="btn btn-xs btn-error btn-outline"*/
+              className="btn btn-xs"
               onClick={() => {
                 if (
                   !window.confirm(
@@ -190,7 +190,8 @@ function RelayCard({ account }: { account: PublicKey }) {
             >
               🚫
             </button>
-            
+            </p>
+            </div>
           </div>
         </div>
       </div>

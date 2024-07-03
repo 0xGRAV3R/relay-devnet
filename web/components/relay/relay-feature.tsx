@@ -28,7 +28,7 @@ export default function RelayFeature() {
       {/* Added Modal */} 
 
       {/* Open the modal using document.getElementById('ID').showModal() method */}
-      <button className="btn" onClick={()=>(document.getElementById('send_message_modal') as HTMLDialogElement).showModal()}>💬 Send Message</button>
+      <button className="btn btn-accent" onClick={()=>(document.getElementById('send_message_modal') as HTMLDialogElement).showModal()}>💬 Send Message</button>
       <dialog id="send_message_modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Relay - Solana Messenger</h3>
