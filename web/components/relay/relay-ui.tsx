@@ -172,7 +172,7 @@ function RelayCard({ account }: { account: PublicKey }) {
             &nbsp;
             <button
               /*className="btn btn-xs btn-error btn-outline"*/
-              className="btn btn-circle btn-xs "
+              className="btn btn-circle btn-outline"
               onClick={() => {
                 if (
                   !window.confirm(
