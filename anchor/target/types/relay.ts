@@ -29,6 +29,14 @@ export type Relay = {
         {
           "name": "message",
           "type": "string"
+        },
+        {
+          "name": "recipient",
+          "type": "string"
+        },
+        {
+          "name": "enc",
+          "type": "bool"
         }
       ]
     },
@@ -59,6 +67,14 @@ export type Relay = {
         {
           "name": "message",
           "type": "string"
+        },
+        {
+          "name": "recipient",
+          "type": "string"
+        },
+        {
+          "name": "enc",
+          "type": "bool"
         }
       ]
     },
@@ -106,6 +122,14 @@ export type Relay = {
           {
             "name": "message",
             "type": "string"
+          },
+          {
+            "name": "recipient",
+            "type": "string"
+          },
+          {
+            "name": "enc",
+            "type": "bool"
           }
         ]
       }
@@ -144,6 +168,14 @@ export const IDL: Relay = {
         {
           "name": "message",
           "type": "string"
+        },
+        {
+          "name": "recipient",
+          "type": "string"
+        },
+        {
+          "name": "enc",
+          "type": "bool"
         }
       ]
     },
@@ -174,6 +206,14 @@ export const IDL: Relay = {
         {
           "name": "message",
           "type": "string"
+        },
+        {
+          "name": "recipient",
+          "type": "string"
+        },
+        {
+          "name": "enc",
+          "type": "bool"
         }
       ]
     },
@@ -221,6 +261,14 @@ export const IDL: Relay = {
           {
             "name": "message",
             "type": "string"
+          },
+          {
+            "name": "recipient",
+            "type": "string"
+          },
+          {
+            "name": "enc",
+            "type": "bool"
           }
         ]
       }

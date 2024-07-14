@@ -29,6 +29,14 @@
         {
           "name": "message",
           "type": "string"
+        },
+        {
+          "name": "recipient",
+          "type": "string"
+        },
+        {
+          "name": "enc",
+          "type": "bool"
         }
       ]
     },
@@ -59,6 +67,14 @@
         {
           "name": "message",
           "type": "string"
+        },
+        {
+          "name": "recipient",
+          "type": "string"
+        },
+        {
+          "name": "enc",
+          "type": "bool"
         }
       ]
     },
@@ -106,12 +122,20 @@
           {
             "name": "message",
             "type": "string"
+          },
+          {
+            "name": "recipient",
+            "type": "string"
+          },
+          {
+            "name": "enc",
+            "type": "bool"
           }
         ]
       }
     }
   ],
   "metadata": {
-    "address": "DBPA83yqVRDspVi2sXGWPQbFR4AwuBpFZY79GyKHb53N"
+    "address": "5ZeMSd6ot2FPBBAt1s4hF3ffKAjNvp1LvFNT62FPqQCi"
   }
 }

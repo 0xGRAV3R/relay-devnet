@@ -9,7 +9,10 @@ import {
   useRelayProgramAccount,
 } from './relay-data-access';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import nacl from 'tweetnacl';
+import naclUtil from 'tweetnacl-util';
 
 // comment
 
@@ -18,12 +21,49 @@ export function RelayCreate() {
   const { publicKey } = useWallet();
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
+  const [recipient, setRecipient] = useState('');
+  const [myKey, setMyKey] = useState(''); // Add myKey state
+  const [myPublicKey, setMyPublicKey] = useState(''); // Add myPublicKey state
+  const [enc, setEnc] = useState(false);
 
-  const isFormValid = title.trim() !== '' && message.trim() !== '';
+  const isFormValid = title.trim() !== '' && message.trim() !== '' && recipient.trim() !== '' && myKey.trim() !== '' && myPublicKey.trim() !== '';
 
   const handleSubmit = () => {
     if (publicKey && isFormValid) {
-      createEntry.mutateAsync({ title, message, owner: publicKey });
+      console.log("recipient", recipient);
+      console.log("recipient length", recipient.length);
+      const recipientUint8 = naclUtil.decodeBase64(recipient); // Decode recipient pub key from Base64
+      const myKeyUint8 = naclUtil.decodeBase64(myKey); // Decode myKey private key from Base64
+
+
+      let encryptedMessage = message;
+
+      if (enc) {
+        const nonce = nacl.randomBytes(nacl.secretbox.nonceLength);
+        // const keyPair = nacl.box.keyPair();
+        // const sharedSecret = nacl.box.before(recipientPubkey.toBuffer(), keyPair.secretKey);
+        const sharedSecret = nacl.box.before(recipientUint8, myKeyUint8);
+
+        const encrypted = nacl.box.after(
+          naclUtil.decodeUTF8(message),
+          nonce,
+          sharedSecret
+        );
+
+        encryptedMessage = JSON.stringify({
+          nonce: naclUtil.encodeBase64(nonce),
+          encrypted: naclUtil.encodeBase64(encrypted),
+          senderPublicKey: myPublicKey
+        });
+        console.log("Length of encryptedMessage:", new TextEncoder().encode(encryptedMessage).length);
+      }
+
+      console.log("recipient length", recipient.length);
+      console.log("title length", title.length);
+      console.log("encryptedMessage length", encryptedMessage.length);
+
+      // console.log("enc length", enc.length);
+      createEntry.mutateAsync({ title, message: encryptedMessage, owner: publicKey, recipient: recipient, enc });
     }
   };
 
@@ -47,6 +87,38 @@ export function RelayCreate() {
         onChange={(e) => setMessage(e.target.value)}
         className="textarea textarea-bordered textarea-xs w-full max-w-xs"
       />
+      <input
+        type="text"
+        placeholder="Recipient TweetNacl Public Key"
+        value={recipient}
+        onChange={(e) => setRecipient(e.target.value)}
+        className="input input-bordered input-xs w-full max-w-xs mb-1"
+      />
+      <input
+        type="text"
+        placeholder="Your Private Key (Base64) - will NOT be stored"
+        value={myKey}
+        onChange={(e) => setMyKey(e.target.value)}
+        className="input input-bordered input-xs w-full max-w-xs mb-1"
+      />
+      <input
+        type="text"
+        placeholder="Your Public Key"
+        value={myPublicKey}
+        onChange={(e) => setMyPublicKey(e.target.value)}
+        className="input input-bordered input-xs w-full max-w-xs mb-1"
+      />
+      <div className="form-control">
+        <label className="cursor-pointer label">
+          <span className="label-text">Encrypt</span>
+          <input
+            type="checkbox"
+            checked={enc}
+            onChange={(e) => setEnc(e.target.checked)}
+            className="checkbox checkbox-primary"
+          />
+        </label>
+      </div>            
       <br></br>
       <button
         className="btn btn-xs sm:btn-sm btn-accent"
@@ -105,15 +177,47 @@ function RelayCard({ account }: { account: PublicKey }) {
     updateEntry, 
     deleteEntry
   } = useRelayProgramAccount({ account });
-  const { publicKey } = useWallet();
+  const { publicKey, signMessage } = useWallet();
   const [message, setMessage] = useState('');
+  const [decryptedMessage, setDecryptedMessage] = useState<string | null>(null);
   const title = accountQuery.data?.title; 
+  // const recipient = accountQuery.data?.recipient;
+  // const recipient = accountQuery.data?.recipient ? new PublicKey(accountQuery.data.recipient) : undefined;
+  const recipient = accountQuery.data?.recipient || ''; // Updated to handle recipient as text
+  const enc = accountQuery.data?.enc;
 
-  const isFormValid = message.trim() !== '';
+
+  // useEffect(() => {
+  //   const decryptMessage = async () => {
+  //     if (enc && recipient && publicKey && accountQuery.data?.message) {
+  //       const keyPair = Keypair.fromSecretKey(await signMessage(new Uint8Array()));
+  //       const nonce = naclUtil.decodeBase64(JSON.parse(accountQuery.data.message).nonce);
+  //       const encrypted = naclUtil.decodeBase64(JSON.parse(accountQuery.data.message).encrypted);
+
+  //       const sharedSecret = nacl.box.before(recipient.toBuffer(), keyPair.secretKey);
+
+  //       const decrypted = nacl.box.open.after(encrypted, nonce, sharedSecret);
+
+  //       if (decrypted) {
+  //         setDecryptedMessage(naclUtil.encodeUTF8(decrypted));
+  //       } else {
+  //         setDecryptedMessage('Failed to decrypt message');
+  //       }
+  //     } else {
+  //       setDecryptedMessage(accountQuery.data?.message);
+  //     }
+  //   };
+
+  //   decryptMessage();
+  // }, [accountQuery.data, publicKey, recipient, enc, signMessage]);
+
+
+  // const isFormValid = message.trim() !== '';
+  const isFormValid = message.trim() !== '' && recipient !== undefined && enc !== undefined;
 
   const handleSubmit = () => {
     if (publicKey && isFormValid && title) {
-      updateEntry.mutateAsync({ title, message, owner: publicKey });
+      updateEntry.mutateAsync({ title, message, owner: publicKey, recipient, enc });
     }
   };
 
@@ -142,8 +246,11 @@ function RelayCard({ account }: { account: PublicKey }) {
           
           <div className="chat-bubble">
           <p> 
-          {accountQuery.data?.message}
+          {/* {accountQuery.data?.message} */}
+          {decryptedMessage || accountQuery.data?.message}
           </p>
+          <p>Recipient: {recipient?.toString()}</p> {/* Convert recipient to string */}
+          <p>Encrypted: {enc ? 'Yes' : 'No'}</p>
           </div>
           {/*<div className="card-actions justify-around">
             <textarea

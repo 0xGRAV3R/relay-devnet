@@ -10,10 +10,25 @@ import { useCluster } from '../cluster/cluster-data-access';
 import { useAnchorProvider } from '../solana/solana-provider';
 import { useTransactionToast } from '../ui/ui-layout';
 
+
+
+// Define the interface for the relay entry state
+interface RelayEntryState {
+  owner: PublicKey;
+  title: string;
+  message: string;
+  recipient: string;
+  enc: boolean;
+}
+
+
 interface CreateEntryArgs {
   title: string;
   message: string;
   owner: PublicKey;
+  recipient: string;
+  enc: boolean;
+
 }
 
 export function useRelayProgram() {
@@ -21,8 +36,23 @@ export function useRelayProgram() {
   const { cluster } = useCluster();
   const transactionToast = useTransactionToast();
   const provider = useAnchorProvider();
-  const programId = new PublicKey("DBPA83yqVRDspVi2sXGWPQbFR4AwuBpFZY79GyKHb53N");
+  const programId = new PublicKey("5ZeMSd6ot2FPBBAt1s4hF3ffKAjNvp1LvFNT62FPqQCi");
+  // const programId = new PublicKey("KBScsXsbBp8cTgzkML8bFRvoYb5E3fRGpxxsaU4hzRz");
+  // const programId = new PublicKey("DBPA83yqVRDspVi2sXGWPQbFR4AwuBpFZY79GyKHb53N");
   const program = new Program(RelayIDL, programId, provider);
+  // let program;
+
+  // try {
+  //   program = new Program(RelayIDL, programId, provider);
+  // } catch (error) {
+  //   console.error("Failed to initialize program:", error);
+  //   return { instructions: [] };
+  // }
+
+  // if (!program) {
+  //   console.error("Program is not defined");
+  //   return { instructions: [] };
+  // }
 
   const accounts = useQuery({
     queryKey: ['relay', 'all', { cluster }],
@@ -36,14 +66,14 @@ export function useRelayProgram() {
 
   const createEntry = useMutation<string, Error, CreateEntryArgs>({
     mutationKey: ['relayEntry', 'create', { cluster }],
-    mutationFn: async ({ title, message, owner }) => {
+    mutationFn: async ({ title, message, owner, recipient, enc }) => {
       const [relayEntryAddress] = await PublicKey.findProgramAddress(
         [Buffer.from(title), owner.toBuffer()],
         programId
       );
   
       return program.methods
-        .createRelayEntry(title, message)
+        .createRelayEntry(title, message,  recipient, enc)
         .accounts({
           relayEntry: relayEntryAddress,
         })
@@ -80,14 +110,14 @@ export function useRelayProgramAccount({ account }: { account: PublicKey }) {
 
   const updateEntry = useMutation<string, Error, CreateEntryArgs>({
     mutationKey: ['relayEntry', 'update', { cluster }],
-    mutationFn: async ({ title, message, owner }) => {
+    mutationFn: async ({ title, message, owner, recipient, enc }) => {
       const [relayEntryAddress] = await PublicKey.findProgramAddress(
         [Buffer.from(title), owner.toBuffer()],
         programId
       );
   
       return program.methods
-        .updateRelayEntry(title, message)
+        .updateRelayEntry(title, message, recipient, enc)
         .accounts({
           relayEntry: relayEntryAddress,
         })
