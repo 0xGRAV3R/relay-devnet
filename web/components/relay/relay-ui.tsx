@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 
 import nacl from 'tweetnacl';
 import naclUtil from 'tweetnacl-util';
+import Modal from 'react-modal';
 
 // comment
 
@@ -180,46 +181,85 @@ function RelayCard({ account }: { account: PublicKey }) {
   const { publicKey, signMessage } = useWallet();
   const [message, setMessage] = useState('');
   const [decryptedMessage, setDecryptedMessage] = useState<string | null>(null);
+  // const [showModal, setShowModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [privateKey, setPrivateKey] = useState('');
+  const [privateKeyInput, setPrivateKeyInput] = useState('');
   const title = accountQuery.data?.title; 
   // const recipient = accountQuery.data?.recipient;
   // const recipient = accountQuery.data?.recipient ? new PublicKey(accountQuery.data.recipient) : undefined;
   const recipient = accountQuery.data?.recipient || ''; // Updated to handle recipient as text
   const enc = accountQuery.data?.enc;
+  // const messageData = accountQuery.data?.message ? JSON.parse(accountQuery.data.message) : null;
 
+  const isJSON = (str: string) => {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  };
 
-  // useEffect(() => {
-  //   const decryptMessage = async () => {
-  //     if (enc && recipient && publicKey && accountQuery.data?.message) {
-  //       const keyPair = Keypair.fromSecretKey(await signMessage(new Uint8Array()));
-  //       const nonce = naclUtil.decodeBase64(JSON.parse(accountQuery.data.message).nonce);
-  //       const encrypted = naclUtil.decodeBase64(JSON.parse(accountQuery.data.message).encrypted);
-
-  //       const sharedSecret = nacl.box.before(recipient.toBuffer(), keyPair.secretKey);
-
-  //       const decrypted = nacl.box.open.after(encrypted, nonce, sharedSecret);
-
-  //       if (decrypted) {
-  //         setDecryptedMessage(naclUtil.encodeUTF8(decrypted));
-  //       } else {
-  //         setDecryptedMessage('Failed to decrypt message');
-  //       }
-  //     } else {
-  //       setDecryptedMessage(accountQuery.data?.message);
-  //     }
-  //   };
-
-  //   decryptMessage();
-  // }, [accountQuery.data, publicKey, recipient, enc, signMessage]);
-
+  // const messageData = enc && accountQuery.data?.message && isJSON(accountQuery.data.message)
+  //   ? JSON.parse(accountQuery.data.message)
+  //   : null;
+  const messageData = enc && accountQuery.data?.message && isJSON(accountQuery.data.message)
+    ? JSON.parse(accountQuery.data.message)
+    : accountQuery.data?.message;
 
   // const isFormValid = message.trim() !== '';
   const isFormValid = message.trim() !== '' && recipient !== undefined && enc !== undefined;
+
 
   const handleSubmit = () => {
     if (publicKey && isFormValid && title) {
       updateEntry.mutateAsync({ title, message, owner: publicKey, recipient, enc });
     }
   };
+
+  // const handleDecrypt = async () => {
+  //   const { nonce, encrypted, senderPublicKey } = messageData;
+  //   const decrypted = await decryptMessage(encrypted, nonce, senderPublicKey, privateKey);
+  //   setDecryptedMessage(decrypted);
+  // };
+
+  const handleDecrypt = () => {
+    setIsModalOpen(true);
+  };
+
+  // // Function to toggle the modal
+  // const toggleModal = () => {
+  //   setShowModal(!showModal);
+  // };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setDecryptedMessage(null);
+    setPrivateKeyInput('');
+  };
+
+  const handleDecryptMessage = async () => {
+    try {
+      const messageData = accountQuery.data?.message ? JSON.parse(accountQuery.data.message) : null;
+      if (messageData) {
+        const decrypted = await decryptMessage(
+          messageData.encrypted,
+          messageData.nonce,
+          messageData.senderPublicKey,
+          privateKeyInput
+        );
+        setDecryptedMessage(decrypted);
+      }
+    } catch (error) {
+      console.error('Failed to decrypt message', error);
+      setDecryptedMessage('Failed to decrypt message');
+    }
+  };  
+
+
+
+
 
   if (!publicKey){
     return <p>Connect your wallet</p>
@@ -229,8 +269,6 @@ function RelayCard({ account }: { account: PublicKey }) {
     <span className="loading loading-spinner loading-lg"></span>
   ) : (
     <div className="chat chat-start">
-    {/*<div className="card card-bordered border-base-300 border-2 text-neutral-content">*/}  
-      {/*<div className="card-body p-8">*/}
       <div className="p-2">
         <div className="space-y-2">
           
@@ -251,22 +289,13 @@ function RelayCard({ account }: { account: PublicKey }) {
           </p>
           <p>Recipient: {recipient?.toString()}</p> {/* Convert recipient to string */}
           <p>Encrypted: {enc ? 'Yes' : 'No'}</p>
+          {enc && (
+              <button onClick={handleDecrypt} className="btn btn-xs sm:btn-sm btn-accent">
+                Decrypt
+              </button>
+            )}
           </div>
-          {/*<div className="card-actions justify-around">
-            <textarea
-              placeholder="Update message here"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="textarea textarea-bordered w-full max-w-xs"
-            />
-            <button
-              className="btn btn-xs lg:btn-md btn-primary"
-              onClick={handleSubmit}
-              disabled={updateEntry.isPending || !isFormValid}
-            >
-              Update Message Entry {updateEntry.isPending && '...'}
-            </button>
-          </div>*/}
+
           <div className="text-left">
           {/* <div className="text-center space-y-4"> */}
             <div className="chat-footer opacity-50">
@@ -314,6 +343,59 @@ function RelayCard({ account }: { account: PublicKey }) {
           </div>
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onRequestClose={handleModalClose}>
+        <h2>Decrypt Message</h2>
+        {decryptedMessage ? (
+          <div>
+            <p>Decrypted Message: {decryptedMessage}</p>
+            <button onClick={handleModalClose} className="btn btn-accent">Close</button>
+          </div>
+        ) : (
+          <div>
+            {/* <p>Nonce: {accountQuery.data?.message ? JSON.parse(accountQuery.data.message).nonce : ''}</p>
+            <p>Encrypted Message: {accountQuery.data?.message ? JSON.parse(accountQuery.data.message).encrypted : ''}</p>
+            <p>Sender Public Key: {accountQuery.data?.message ? JSON.parse(accountQuery.data.message).senderPublicKey : ''}</p> */}
+            <p>Nonce: {messageData?.nonce}</p>
+            <p>Encrypted Message: {messageData?.encrypted}</p>
+            <p>Sender Public Key: {messageData?.senderPublicKey}</p>
+            <input
+              type="text"
+              placeholder="Enter your private key"
+              value={privateKeyInput}
+              onChange={(e) => setPrivateKeyInput(e.target.value)}
+              className="input input-bordered input-xs w-full max-w-xs mb-1"
+            />
+            <button onClick={handleDecryptMessage} className="btn btn-accent">Decrypt</button>
+          </div>
+        )}
+      </Modal>
     </div>
   );
+}
+
+
+async function decryptMessage(
+  encrypted: string, 
+  nonce: string, 
+  senderPublicKey: string, 
+  privateKey: string
+) {
+  // Add your decryption logic here
+  const senderPublicKeyUint8 = naclUtil.decodeBase64(senderPublicKey);
+  const nonceUint8 = naclUtil.decodeBase64(nonce);
+  const privateKeyUint8 = naclUtil.decodeBase64(privateKey);
+
+  
+  const sharedSecret = nacl.box.before(senderPublicKeyUint8, privateKeyUint8);
+  const encryptedUint8 = naclUtil.decodeBase64(encrypted);
+
+  const decryptedMessage = nacl.box.open.after(encryptedUint8, nonceUint8, sharedSecret);
+
+  // return decrypted ? naclUtil.encodeUTF8(decrypted) : 'Failed to decrypt message';
+
+  if (decryptedMessage) {
+    return naclUtil.encodeUTF8(decryptedMessage);
+  } else {
+    throw new Error('Failed to decrypt the message');
+  }
 }
