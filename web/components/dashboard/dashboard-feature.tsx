@@ -1,6 +1,7 @@
 'use client';
 
 import { AppHero } from '../ui/ui-layout';
+import KeyPairGenerator from '../ui/KeyPairGenerator'; // Import the KeyPairGenerator component
 
 const links: { label: string; href: string }[] = [
   { label: 'Solana Docs', href: 'https://docs.solana.com/' },
@@ -39,6 +40,9 @@ export default function DashboardFeature() {
               </a>
             </div>
           ))}
+        </div>
+        <div className="max-w-xl mx-auto py-6 sm:px-6 lg:px-8 text-center">
+          <KeyPairGenerator /> {/* Add the KeyPairGenerator component here */}
         </div>
       </div>
     </div>
